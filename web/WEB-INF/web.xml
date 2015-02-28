@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>TO</display-name>
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>DBController</display-name>
+    <servlet-name>DBController</servlet-name>
+    <servlet-class>com.monitor.controller.DBController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DBController</servlet-name>
+    <url-pattern>/DBController</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>StatusController</display-name>
+    <servlet-name>StatusController</servlet-name>
+    <servlet-class>com.monitor.controller.StatusController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>StatusController</servlet-name>
+    <url-pattern>/StatusController</url-pattern>
+  </servlet-mapping>
+   <servlet>
+    <description></description>
+    <display-name>Schedular</display-name>
+    <servlet-name>Schedular</servlet-name>
+    <servlet-class>com.monitor.controller.Schedular</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Schedular</servlet-name>
+    <url-pattern>/Schedular</url-pattern>
+  </servlet-mapping>
+</web-app>

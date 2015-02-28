@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="DBMonitor" default="war" basedir=".">
+
+	<property name="project-name" value="${ant.project.name}" />
+	<property name="builder" value="DBMonitor" />
+
+	<property name="war-file-name" value="${project-name}.war" />
+	<property name="source-directory" value="src" />
+	<property name="classes-directory" value="bin" />
+	<property name="web-directory" value="web" />
+	<property name="web-xml-file" value="web/WEB-INF/web.xml" />
+	<property name="web" value="web/WEB-INF" />
+	
+	<tstamp prefix="build-info">
+		<format property="current-date" pattern="d-MMMM-yyyy" locale="en" />
+		<format property="current-time" pattern="hh:mm:ss a z" locale="en" />
+	</tstamp>
+	<property name="build-directory" value="build" />
+	
+	
+	<path id="compile.classpath">
+	 	<pathelement location="${web}/lib"/>
+	    <fileset dir="${web}/lib">
+	      <include name="*.jar"/>
+	    </fileset>
+	</path>
+	
+	<target name="prepare" depends="clean"
+	          description="Create working dirs and copy static files to work dir">
+	    <mkdir  dir="${classes-directory}"/>
+		<copyfile src="resources/db.properties" dest="${classes-directory}/db.properties"/>
+	</target>
+	
+	<target name="clean"
+	          description="Delete old work and dist directories">
+	    <delete dir="${classes-directory}"/>
+	    <delete file="${build-directory}/DBMonitor.war"/>
+	</target>
+
+	<target name="compile" depends="prepare"
+	          description="Compile Java sources and copy to WEB-INF/classes dir">
+	    <javac srcdir="${source-directory}" debug="true" verbose="false"
+	          destdir="${classes-directory}">
+	        <classpath refid="compile.classpath"/>
+	    </javac>
+	  </target>
+
+	
+	<target name="war" depends="compile">
+		<mkdir dir="${build-directory}" />
+		<copyfile src="resources/db.properties" dest="${build-directory}/classes/db.properties"/>
+		<delete file="${build-directory}/${war-file-name}" />
+		<war warfile="${build-directory}/${war-file-name}" webxml="${web-xml-file}">
+			<classes dir="${classes-directory}" />
+			<fileset dir="${web-directory}">
+				<!-- Need to exclude it since webxml is an attribute of the war tag above -->
+				<exclude name="WEB-INF/web.xml" />
+				<exclude name="WEB-INF/lib/servlet-api.jar" />
+			</fileset>
+			<manifest>
+				<attribute name="Built-By" value="${builder}" />
+				<attribute name="Built-On" value="${build-info.current-date}" />
+				<attribute name="Built-At" value="${build-info.current-time}" />
+			</manifest>
+		</war>
+	</target>
+
+</project>
